@@ -13,6 +13,11 @@ git branch -M main
 git remote add origin https://github.com/AvellDesenvolvimento/Expert_Start_On.git
 git push -u origin main
 
+# COMANDO PARA UPAR NO GITHUB SEMPRE:
+git add .
+git commit -m "sua descrição aqui"
+git push
+
 para rodar a plicação tem que buildar!:
 gnpm run build
 
