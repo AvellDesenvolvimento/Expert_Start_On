@@ -1,0 +1,8 @@
+
+# CRIAÇÃO DO PROJETO:
+npm create vite@latest . -- --template react
+npm install
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+
