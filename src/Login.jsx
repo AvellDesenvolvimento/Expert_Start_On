@@ -10,8 +10,13 @@ const Login = ({ onLogin }) => {
       const user = result.user;
       const idToken = await user.getIdToken();
 
-      // Aqui enviamos para o seu backend
-      const response = await fetch('http://localhost:3000/login', {
+      // Define a URL do backend dinamicamente
+      const API_URL = window.location.hostname === 'localhost' 
+        ? 'http://localhost:3000' 
+        : 'https://start-on.onrender.com';
+
+      // Aqui enviamos para o seu backend usando a URL correta
+      const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ idToken }),
