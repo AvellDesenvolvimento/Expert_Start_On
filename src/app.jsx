@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Login from './login'
-import './App.css'
+import './app.css'
 
 function App() {
   // Novo estado para controlar o login

@@ -1,50 +1,74 @@
-import React from 'react';
-import { signInWithPopup } from 'firebase/auth';
-import { auth, provider } from './firebaseClient';
+import { useState, useEffect } from "react";
+import { signInWithRedirect, getRedirectResult } from "firebase/auth";
+import { auth, provider } from "./firebaseClient"; 
 
-// Adicionamos { onLogin } aqui para receber a função do App.jsx
-const Login = ({ onLogin }) => {
-  const handleGoogleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      const idToken = await user.getIdToken();
+const Login = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-      // Define a URL do backend dinamicamente
-      const API_URL = window.location.hostname === 'localhost' 
-        ? 'http://localhost:3000' 
-        : 'https://start-on.onrender.com';
-
-      // Aqui enviamos para o seu backend usando a URL correta
-      const response = await fetch(`${API_URL}/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ idToken }),
+  useEffect(() => {
+    // 1. Captura o resultado do redirecionamento
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result) {
+          setLoading(true);
+          const user = result.user;
+          
+          // Envia o token para o seu Backend
+          user.getIdToken().then(idToken => {
+            // URL ajustada para a sua API no Render
+            fetch('https://start-on.onrender.com/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ idToken })
+            })
+            .then(res => res.json())
+            .then(data => {
+               console.log("Login efetuado com sucesso:", data);
+               setLoading(false);
+               
+               // REDIRECIONAMENTO ATIVADO:
+               // Mude '/painel' para o nome exato da rota que você quer abrir após logar
+               window.location.href = '/painel'; 
+            })
+            .catch(err => {
+                console.error("Erro de comunicação com o backend:", err);
+                setError("Falha ao validar login no servidor.");
+                setLoading(false);
+            });
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Erro no redirecionamento do Firebase:", error);
+        setError("Erro ao autenticar com Google.");
+        setLoading(false);
       });
+  }, []);
 
-      const data = await response.json();
-      
-      if (data.status === 'success') {
-        // Chamamos a função onLogin passando os dados do usuário que o backend devolveu
-        onLogin(data.user);
-      } else {
-        alert("Erro na autenticação: " + (data.error || "Erro desconhecido"));
-      }
-
-    } catch (error) {
-      console.error("Erro no login:", error);
-      alert("Erro ao logar com Google.");
+  // 2. Função de disparo
+  const handleLogin = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      await signInWithRedirect(auth, provider);
+    } catch (err) {
+      console.error("Erro ao iniciar redirecionamento:", err);
+      setError("Não foi possível iniciar o login.");
+      setLoading(false);
     }
   };
 
   return (
-    <div style={{ padding: '50px', textAlign: 'center' }}>
-      <h1>Acesso Start_On</h1>
+    <div className="login-container">
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      
       <button 
-        onClick={handleGoogleLogin}
-        style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}
+        onClick={handleLogin} 
+        disabled={loading}
+        style={{ padding: "10px 20px", cursor: loading ? "not-allowed" : "pointer" }}
       >
-        Entrar com Google
+        {loading ? "Processando..." : "Logar com Google"}
       </button>
     </div>
   );
