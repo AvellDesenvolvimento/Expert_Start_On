@@ -1,17 +1,16 @@
 import React from 'react';
 import { signInWithPopup } from 'firebase/auth';
-import { auth, provider } from '../firebaseClient'; // Certifique-se de que o caminho está correto
+import { auth, provider } from '../firebaseClient';
 
-const Login = () => {
+// Adicionamos { onLogin } aqui para receber a função do App.jsx
+const Login = ({ onLogin }) => {
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       const idToken = await user.getIdToken();
 
-      console.log("Token gerado:", idToken);
-
-      // Aqui enviamos para o nosso backend que você já configurou
+      // Aqui enviamos para o seu backend
       const response = await fetch('http://localhost:3000/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -19,9 +18,13 @@ const Login = () => {
       });
 
       const data = await response.json();
-      console.log("Resposta do servidor:", data);
       
-      alert(`Login realizado com sucesso! Bem-vindo: ${user.email}`);
+      if (data.status === 'success') {
+        // Chamamos a função onLogin passando os dados do usuário que o backend devolveu
+        onLogin(data.user);
+      } else {
+        alert("Erro na autenticação: " + (data.error || "Erro desconhecido"));
+      }
 
     } catch (error) {
       console.error("Erro no login:", error);
