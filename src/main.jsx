@@ -1,10 +1,9 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './app.jsx'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './app';
+import './expert.css';
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+// Força o modo dark ao iniciar
+document.body.classList.add('dark-mode');
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);

@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 import Login from './login'
-import './app.css'
+import Expert from './expert'
+import './expert.css'
 
 function App() {
   // Novo estado para controlar o login
   const [user, setUser] = useState(null)
   const [apiData, setApiData] = useState(null)
+
+  // <-- ADICIONADO: Verifica a URL atual do navegador
+  const currentPath = window.location.pathname;
 
   useEffect(() => {
     // A chamada para o backend só acontece SE o usuário estiver logado
@@ -17,12 +21,17 @@ function App() {
     }
   }, [user])
 
+  // <-- ADICIONADO: Se a rota for o painel, carrega a tela do Expert
+  if (currentPath === '/painel') {
+    return <Expert />
+  }
+
   // SE NÃO HOUVER USUÁRIO, MOSTRA APENAS O LOGIN
   if (!user) {
     return <Login onLogin={setUser} />
   }
 
-  // SE TIVER USUÁRIO, MOSTRA O CONTEÚDO ORIGINAL
+  // SE TIVER USUÁRIO, MOSTRA O CONTEÚDO ORIGINAL INTACTO
   return (
     <main className="min-h-screen bg-gray-950 text-white flex items-center justify-center p-6">
       <div className="bg-gray-900 p-8 rounded-xl border border-gray-700 shadow-xl w-full max-w-md">
