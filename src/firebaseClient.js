@@ -2,12 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "SUA_API_KEY",
-  authDomain: "SEU_PROJETO.firebaseapp.com",
-  projectId: "SEU_PROJETO",
-  storageBucket: "SEU_PROJETO.appspot.com",
-  messagingSenderId: "SEU_ID",
-  appId: "SEU_APP_ID"
+  apiKey: "AIzaSyCoFi0gwhQodxZDDue1whbP-aywS1XyWog",
+  authDomain: "start-onlogin.firebaseapp.com",
+  databaseURL: "https://start-onlogin-default-rtdb.firebaseio.com",
+  projectId: "start-onlogin",
+  storageBucket: "start-onlogin.firebasestorage.app",
+  messagingSenderId: "859600403267",
+  appId: "1:859600403267:web:b07c3a1341501edd254df6"
 };
 
 const app = initializeApp(firebaseConfig);
