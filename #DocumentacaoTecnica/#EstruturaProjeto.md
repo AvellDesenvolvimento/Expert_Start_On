@@ -23,4 +23,7 @@ git status
 git commit -m "Update projeto Login"
 git push origin main
 
-ou:   git push
+# Resumo para enviar para o git
+git add .
+git commit -m "Ajuste para build automático no Render"
+git push origin main
