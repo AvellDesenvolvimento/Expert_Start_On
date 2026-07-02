@@ -24,6 +24,7 @@ git commit -m "Update projeto Login"
 git push origin main
 
 # Resumo para enviar para o git
+npm run build
 git add .
 git commit -m "Ajuste para build automático no Render"
 git push origin main

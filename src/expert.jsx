@@ -1,5 +1,5 @@
 import React from 'react';
-import ThemeToggle from './themeToggle'; // Lembre-se: use exatamente o nome (maiúsculo ou minúsculo) que ficou no seu arquivo!
+import ThemeToggle from './themeToggle';
 import { auth } from './firebaseClient';
 
 const Expert = () => {
