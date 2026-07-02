@@ -28,7 +28,7 @@ const Login = () => {
       
       const data = await response.json();
       
-      // 4. Se o Render aprovar, manda pro painel
+      // 4. Se o Render aprovar, manda pro start
       if (response.ok) {
          console.log("Login efetuado com sucesso:", data);
          window.location.href = '/start'; 

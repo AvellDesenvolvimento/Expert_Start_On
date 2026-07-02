@@ -29,7 +29,7 @@ const Login = () => {
                setLoading(false);
                
                // REDIRECIONAMENTO ATIVADO:
-               window.location.href = '/painel'; 
+               window.location.href = '/start'; 
             })
             .catch(err => {
                 console.error("Erro de comunicação com o backend:", err);
