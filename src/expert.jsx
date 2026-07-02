@@ -6,7 +6,7 @@ export default function Expert() {
 
   // Lista de menus (facilita para adicionar novos depois)
   const Menus = [
-    { title: "Dashboard", icon: "📊" },
+    { title: "Automação", icon: "📊" },
     { title: "Produção", icon: "⚙️" },
     { title: "Relatórios", icon: "📄" },
     { title: "Configurações", icon: "🔧" },
