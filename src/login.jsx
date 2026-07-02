@@ -31,7 +31,7 @@ const Login = () => {
       // 4. Se o Render aprovar, manda pro painel
       if (response.ok) {
          console.log("Login efetuado com sucesso:", data);
-         window.location.href = '/painel'; 
+         window.location.href = '/start'; 
       } else {
          // Se o Render recusar (ex: email não autorizado)
          console.error("Backend recusou o login:", data);
