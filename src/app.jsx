@@ -7,7 +7,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/painel" element={<Expert />} />
+        <Route path="/start" element={<Expert />} />
       </Routes>
     </Router>
   );
